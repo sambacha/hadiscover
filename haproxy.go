@@ -39,7 +39,7 @@ func reloadHAproxy(command, configFile string) error {
 
 	err := cmd.Start()
 	if err == nil {
-		pid = cmd.Process.Pid
+		pid = cmd.Process.Pid + 1
 		log.Println("New pid: ", pid)
 	}
 	return err
