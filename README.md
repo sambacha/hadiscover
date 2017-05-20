@@ -46,7 +46,7 @@ The key name in etcd must have be formatted with the form `host:port`, for examp
 ## Command line usage
 
 ```
-haproxy --config templatePath --etcd etcdServersList --ha pathToHAcommand --key etcdKey
+hadiscover --config templatePath --etcd etcdServersList --ha pathToHAcommand --key etcdKey
 ```
 
 Where:
