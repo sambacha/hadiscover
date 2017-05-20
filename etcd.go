@@ -10,7 +10,7 @@ import (
 
 type Backend struct {
 	Name string
-	Ip   string
+	Host string
 	Port string
 }
 
