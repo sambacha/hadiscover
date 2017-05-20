@@ -8,8 +8,10 @@ import (
 	"text/template"
 )
 
-var tpl *template.Template = nil
-var pid int = -1
+var (
+	tpl *template.Template = nil
+	pid int                = -1
+)
 
 func createConfigFile(backends []Backend, templateFile, outputFile string) error {
 	cfgFile, _ := os.Create(outputFile)
