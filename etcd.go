@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/coreos/go-etcd/etcd"
 	"log"
 	"strings"
+
+	"github.com/coreos/go-etcd/etcd"
 )
 
 type Backend struct {

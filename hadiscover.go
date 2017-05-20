@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/coreos/go-etcd/etcd"
 	"log"
+
+	"github.com/coreos/go-etcd/etcd"
 )
 
 var filename = flag.String("config", "./haproxy.cfg.tpl", "Template config file used for HAproxy")
