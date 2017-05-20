@@ -10,7 +10,10 @@ For more information and for build instruction, please read my post about [Servi
 
 ## Config file
 
-hadiscover uses a [go text template](http://golang.org/pkg/text/template) to generate the haproxy configuration. For example:
+hadiscover uses a [go text template](http://golang.org/pkg/text/template) to
+generate the haproxy configuration.
+
+For example:
 
 ```
 global
@@ -42,6 +45,7 @@ The `backend http` part will be replaced by the list of available services retri
 The key name in etcd must have be formatted with the form `host:port`, for example:
 `http://my-etcd-server:4001/keys/services/192.168.0.1:8000`
 
+See the [conf](conf/) directory for example templates.
 
 ## Command line usage
 
