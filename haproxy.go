@@ -13,7 +13,7 @@ var (
 	pid int                = -1
 )
 
-func createConfigFile(backends []Backend, templateFile, outputFile string) error {
+func createConfigFile(services []Service, templateFile, outputFile string) error {
 	cfgFile, _ := os.Create(outputFile)
 	defer cfgFile.Close()
 
@@ -25,7 +25,7 @@ func createConfigFile(backends []Backend, templateFile, outputFile string) error
 		}
 	}
 
-	return tpl.Execute(cfgFile, backends)
+	return tpl.Execute(cfgFile, services)
 }
 
 func reloadHAproxy(command, configFile string) error {
