@@ -2,12 +2,12 @@ package main
 
 import (
 	"flag"
-	"github.com/coreos/go-etcd/etcd"
 	"log"
+
+	"github.com/coreos/go-etcd/etcd"
 )
 
 var filename = flag.String("config", "./haproxy.cfg.tpl", "Template config file used for HAproxy")
-var name = flag.String("name", "back", "Base name used for backends")
 var haproxy = flag.String("ha", "/usr/bin/haproxy", "Path to the `haproxy` executable")
 var etcdHost = flag.String("etcd", "http://localhost:4001", "etcd server(s)")
 var etcdKey = flag.String("key", "services", "etcd root key to look for")
@@ -15,13 +15,15 @@ var etcdKey = flag.String("key", "services", "etcd root key to look for")
 var configFile = ".haproxy.cfg"
 
 func reloadConf(etcdClient *etcd.Client) error {
-	backends, _ := GetBackends(etcdClient, *etcdKey, *name)
+	services, _ := GetServices(etcdClient, *etcdKey)
 
-	err := createConfigFile(backends, *filename, configFile)
+	err := createConfigFile(services, *filename, configFile)
+
 	if err != nil {
 		log.Println("Cannot generate haproxy configuration: ", err)
 		return err
 	}
+
 	return reloadHAproxy(*haproxy, configFile)
 }
 

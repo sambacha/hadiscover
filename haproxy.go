@@ -8,10 +8,12 @@ import (
 	"text/template"
 )
 
-var tpl *template.Template = nil
-var pid int = -1
+var (
+	tpl *template.Template = nil
+	pid int                = -1
+)
 
-func createConfigFile(backends []Backend, templateFile, outputFile string) error {
+func createConfigFile(services []Service, templateFile, outputFile string) error {
 	cfgFile, _ := os.Create(outputFile)
 	defer cfgFile.Close()
 
@@ -23,11 +25,12 @@ func createConfigFile(backends []Backend, templateFile, outputFile string) error
 		}
 	}
 
-	return tpl.Execute(cfgFile, backends)
+	return tpl.Execute(cfgFile, services)
 }
 
 func reloadHAproxy(command, configFile string) error {
 	var cmd *exec.Cmd = nil
+
 	if pid == -1 {
 		log.Println("Start HAproxy")
 		cmd = exec.Command(command, "-f", configFile)
@@ -37,10 +40,12 @@ func reloadHAproxy(command, configFile string) error {
 		cmd = exec.Command(command, "-f", configFile, "-sf", strconv.Itoa(pid))
 	}
 
-	err := cmd.Start()
-	if err == nil {
-		pid = cmd.Process.Pid
-		log.Println("New pid: ", pid)
+	if err := cmd.Start(); err != nil {
+		return err
 	}
-	return err
+
+	pid = cmd.Process.Pid
+	log.Println("New pid: ", pid)
+
+	return nil
 }
